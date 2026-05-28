@@ -57,18 +57,24 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // API Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/rescue', rescueRoutes);
-app.use('/api/adoption', adoptionRoutes);
-app.use('/api/lostfound', lostFoundRoutes);
-app.use('/api/chat', chatRoutes);
-app.use('/api/volunteers', volunteerRoutes);
-app.use('/api/donations', donationRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/notifications', notificationRoutes);
+const apiRouter = express.Router();
+
+apiRouter.use('/auth', authRoutes);
+apiRouter.use('/rescue', rescueRoutes);
+apiRouter.use('/adoption', adoptionRoutes);
+apiRouter.use('/lostfound', lostFoundRoutes);
+apiRouter.use('/chat', chatRoutes);
+apiRouter.use('/volunteers', volunteerRoutes);
+apiRouter.use('/donations', donationRoutes);
+apiRouter.use('/admin', adminRoutes);
+apiRouter.use('/notifications', notificationRoutes);
 
 // Health check
-app.get('/api/health', (req, res) => res.json({ status: 'OK', message: 'Animal Rescue Network API is running 🐾' }));
+apiRouter.get('/health', (req, res) => res.json({ status: 'OK', message: 'Animal Rescue Network API is running 🐾' }));
+
+// Mount routes with and without /api prefix to support frontend misconfigurations
+app.use('/api', apiRouter);
+app.use('/', apiRouter);
 
 // 404 handler
 app.use((req, res) => res.status(404).json({ message: 'Route not found' }));
