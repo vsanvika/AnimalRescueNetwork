@@ -3,7 +3,7 @@ import axios from 'axios';
 // VITE_API_URL should point to the server root (no trailing slash)
 const API = axios.create({
   // Append /api here so every request automatically goes to the correct namespace
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000',
+  baseURL: `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api`,
   withCredentials: true,
 });
 
