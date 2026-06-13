@@ -108,24 +108,24 @@ const Volunteers = () => {
         <form onSubmit={handleRegister} className="glass-card p-7 mb-7 flex flex-col gap-4">
           <h3 className="font-bold text-slate-100 text-lg">Volunteer Registration</h3>
           <div>
-            <label className="block text-slate-400 text-[13px] mb-1.5">Skills (comma separated)</label>
-            <input className="input-field" placeholder="e.g. First Aid, Animal Handling, Driving" value={form.skills} onChange={e => setForm({ ...form, skills: e.target.value })} />
+            <label className="block text-slate-400 text-[13px] mb-1.5">Skills (comma separated) *</label>
+            <input required className="input-field" placeholder="e.g. First Aid, Animal Handling, Driving" value={form.skills} onChange={e => setForm({ ...form, skills: e.target.value })} />
           </div>
           <div>
-            <label className="block text-slate-400 text-[13px] mb-1.5">Availability</label>
-            <select className="input-field" value={form.availability} onChange={e => setForm({ ...form, availability: e.target.value })}>
+            <label className="block text-slate-400 text-[13px] mb-1.5">Availability *</label>
+            <select required className="input-field" value={form.availability} onChange={e => setForm({ ...form, availability: e.target.value })}>
               <option value="full_time">Full Time</option>
               <option value="part_time">Part Time</option>
               <option value="weekends">Weekends Only</option>
             </select>
           </div>
           <div>
-            <label className="block text-slate-400 text-[13px] mb-1.5">Location</label>
-            <input className="input-field" placeholder="Your city" value={form.location} onChange={e => setForm({ ...form, location: e.target.value })} />
+            <label className="block text-slate-400 text-[13px] mb-1.5">Location *</label>
+            <input required className="input-field" placeholder="Your city" value={form.location} onChange={e => setForm({ ...form, location: e.target.value })} />
           </div>
           <div>
-            <label className="block text-slate-400 text-[13px] mb-1.5">Bio</label>
-            <textarea className="input-field" rows={3} placeholder="Tell us about yourself and why you want to volunteer..." value={form.bio} onChange={e => setForm({ ...form, bio: e.target.value })} />
+            <label className="block text-slate-400 text-[13px] mb-1.5">Bio *</label>
+            <textarea required className="input-field" rows={3} placeholder="Tell us about yourself and why you want to volunteer..." value={form.bio} onChange={e => setForm({ ...form, bio: e.target.value })} />
           </div>
           <div className="flex gap-2.5">
             <button type="submit" className="btn-primary" disabled={registering}>{registering ? <Loader size={16} className="spinner" /> : 'Submit'}</button>

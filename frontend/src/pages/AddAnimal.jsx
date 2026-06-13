@@ -7,6 +7,7 @@ import API from '../api/axios';
 const AddAnimal = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: '', type: 'dog', breed: '', age: '', gender: 'unknown', vaccinated: false, description: '', location: '' });
+  const [medical, setMedical] = useState({ vaccinationDetails: '', medicalHistory: '', lost: false });
   const [images, setImages] = useState([]);
   const [previews, setPreviews] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -23,6 +24,7 @@ const AddAnimal = () => {
     try {
       const fd = new FormData();
       Object.entries(form).forEach(([k, v]) => fd.append(k, v));
+      Object.entries(medical).forEach(([k, v]) => fd.append(k, v));
       images.forEach(img => fd.append('images', img));
       await API.post('/adoption', fd, { headers: { 'Content-Type': 'multipart/form-data' } });
       toast.success('Animal listing created!');
@@ -75,11 +77,23 @@ const AddAnimal = () => {
           <label htmlFor="vaccinated" className="text-slate-400 font-medium cursor-pointer">Animal is vaccinated</label>
         </div>
         <div>
+          <label className="block text-slate-400 text-[13px] font-medium mb-1.5">Vaccination Details</label>
+          <input className="input-field" placeholder="Vaccine names / dates" value={medical.vaccinationDetails} onChange={e => setMedical({ ...medical, vaccinationDetails: e.target.value })} />
+        </div>
+        <div>
+          <label className="block text-slate-400 text-[13px] font-medium mb-1.5">Medical History</label>
+          <textarea className="input-field" rows={3} placeholder="Medical conditions / treatments" value={medical.medicalHistory} onChange={e => setMedical({ ...medical, medicalHistory: e.target.value })} />
+        </div>
+        <div className="flex items-center gap-3">
+          <input type="checkbox" id="lost" checked={medical.lost} onChange={e => setMedical({ ...medical, lost: e.target.checked })} className="w-[18px] h-[18px] accent-orange-500" />
+          <label htmlFor="lost" className="text-slate-400 font-medium cursor-pointer">Mark as lost</label>
+        </div>
+        <div>
           <label className="block text-slate-400 text-[13px] font-medium mb-1.5">Description</label>
           <textarea className="input-field" rows={4} placeholder="Describe the animal's personality, health, and needs..." value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} />
         </div>
         <div>
-          <label className="block text-slate-400 text-[13px] font-medium mb-2">Photos (up to 5)</label>
+          <label className="block text-slate-400 text-[13px] font-medium mb-2">Photo</label>
           <div className="border-2 border-dashed border-white/10 rounded-xl p-5 text-center cursor-pointer" onClick={() => document.getElementById('animal-imgs').click()}>
             {previews.length > 0 ? (
               <div className="flex gap-2.5 flex-wrap justify-center">

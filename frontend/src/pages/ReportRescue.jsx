@@ -82,7 +82,7 @@ const ReportRescue = () => {
         {/* Emergency Level */}
         <div>
           <label className="block text-slate-400 text-[13px] font-medium mb-2">Emergency Level *</label>
-          <select className="input-field" value={form.emergencyLevel} onChange={(e) => setForm({ ...form, emergencyLevel: e.target.value })}>
+          <select required className="input-field" value={form.emergencyLevel} onChange={(e) => setForm({ ...form, emergencyLevel: e.target.value })}>
             {emergencyOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
@@ -102,7 +102,7 @@ const ReportRescue = () => {
         <div>
           <label className="block text-slate-400 text-[13px] font-medium mb-2">Location *</label>
           <div className="flex gap-2.5">
-            <input className="input-field flex-1" placeholder="Location address (optional)" value={form.address}
+            <input className="input-field flex-1" placeholder="Address or landmark" value={form.address}
               onChange={(e) => setForm({ ...form, address: e.target.value })} />
             <button type="button" onClick={getLocation} className="btn-secondary shrink-0 px-4 py-2.5" disabled={gettingLoc}>
               {gettingLoc ? <Loader size={16} className="spinner" /> : <MapPin size={16} />}

@@ -15,6 +15,17 @@ const animalSchema = new mongoose.Schema(
     age: { type: Number, default: 0 }, // in months
     gender: { type: String, enum: ['male', 'female', 'unknown'], default: 'unknown' },
     vaccinated: { type: Boolean, default: false },
+    vaccinationDetails: { type: String, default: '' },
+    medicalHistory: { type: String, default: '' },
+    lost: { type: Boolean, default: false },
+    qrToken: { type: String, index: true, unique: true, sparse: true },
+    qrGeneratedAt: { type: Date },
+    qrOnly: { type: Boolean, default: false },
+    ownerContact: {
+      name: { type: String, default: '' },
+      email: { type: String, default: '' },
+      phone: { type: String, default: '' },
+    },
     images: [{ type: String }],
     description: { type: String, default: '' },
     status: { type: String, enum: ['available', 'pending', 'adopted'], default: 'available' },

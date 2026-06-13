@@ -18,6 +18,7 @@ const volunteerRoutes = require('./routes/volunteerRoutes');
 const donationRoutes = require('./routes/donationRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
+const qrRoutes = require('./routes/qrRoutes');
 
 const app = express();
 const server = http.createServer(app);
@@ -68,6 +69,7 @@ apiRouter.use('/volunteers', volunteerRoutes);
 apiRouter.use('/donations', donationRoutes);
 apiRouter.use('/admin', adminRoutes);
 apiRouter.use('/notifications', notificationRoutes);
+apiRouter.use('/qr', qrRoutes);
 
 // Health check
 apiRouter.get('/health', (req, res) => res.json({ status: 'OK', message: 'Animal Rescue Network API is running 🐾' }));

@@ -72,14 +72,16 @@ const Profile = () => {
           <h3 className="font-bold text-slate-100 text-base mb-1">Edit Details</h3>
 
           {[
-            { label: 'Full Name', key: 'name', type: 'text', icon: <User size={15} />, placeholder: 'Your name' },
+            { label: 'Full Name', key: 'name', type: 'text', icon: <User size={15} />, placeholder: 'Your name', required: true },
             { label: 'Phone', key: 'phone', type: 'tel', icon: <Phone size={15} />, placeholder: 'Your phone number' },
           ].map(field => (
             <div key={field.key}>
-              <label className="block text-slate-400 text-[13px] font-medium mb-1.5">{field.label}</label>
+              <label className="block text-slate-400 text-[13px] font-medium mb-1.5">
+                {field.label}{field.required ? ' *' : ''}
+              </label>
               <div className="relative">
                 <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">{field.icon}</span>
-                <input type={field.type} className="input-field pl-[42px]" placeholder={field.placeholder} value={form[field.key]} onChange={e => setForm({ ...form, [field.key]: e.target.value })} />
+                <input type={field.type} required={field.required} className="input-field pl-[42px]" placeholder={field.placeholder} value={form[field.key]} onChange={e => setForm({ ...form, [field.key]: e.target.value })} />
               </div>
             </div>
           ))}

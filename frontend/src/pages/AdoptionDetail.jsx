@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Heart, Loader } from 'lucide-react';
+import { toDataURL } from 'qrcode';
 import toast from 'react-hot-toast';
 import API from '../api/axios';
 import useAuthStore from '../store/authStore';
+
+const buildQrLink = (token) => new URL(`/qr/${token}`, window.location.origin).toString();
 
 const AdoptionDetail = () => {
   const { id } = useParams();
@@ -14,12 +17,20 @@ const AdoptionDetail = () => {
   const [message, setMessage] = useState('');
   const [applying, setApplying] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
+  const [qrSrc, setQrSrc] = useState('');
 
   useEffect(() => {
     API.get(`/adoption/${id}`).then(({ data }) => setAnimal(data)).finally(() => setLoading(false));
   }, [id]);
 
-  const handleApply = async () => {
+  useEffect(() => {
+    if (!animal?.qrToken) return;
+    const url = buildQrLink(animal.qrToken);
+    toDataURL(url).then(setQrSrc).catch(() => setQrSrc(''));
+  }, [animal?.qrToken]);
+
+  const handleApply = async (e) => {
+    e.preventDefault();
     setApplying(true);
     try {
       await API.post(`/adoption/${id}/apply`, { message });
@@ -95,6 +106,23 @@ const AdoptionDetail = () => {
               ))}
             </div>
             <p className="text-[13px] text-slate-500">Added by <span className="text-orange-500">{animal.addedBy?.name}</span></p>
+            {animal.qrToken && (
+              <div className="mt-4">
+                <h4 className="font-semibold text-slate-100 mb-2">Pet QR</h4>
+                <p className="text-slate-400 text-sm mb-2">Scan to view owner & medical info</p>
+                <div className="flex items-center gap-4">
+                  {qrSrc ? (
+                    <img src={qrSrc} alt="qr" className="w-40 h-40 object-cover rounded-md bg-white" />
+                  ) : (
+                    <div className="w-40 h-40 bg-white rounded-md flex items-center justify-center text-slate-500">Loading...</div>
+                  )}
+                  <div className="flex flex-col gap-2">
+                    <button className="btn-primary text-sm" onClick={() => navigator.clipboard.writeText(buildQrLink(animal.qrToken))}>Copy QR Link</button>
+                    <a className="btn-secondary text-sm" href={qrSrc} download={`qr-${animal._id}.png`}>Download PNG</a>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Apply */}
@@ -106,12 +134,12 @@ const AdoptionDetail = () => {
                   ✓ Application submitted — awaiting review
                 </div>
               ) : (
-                <>
-                  <textarea className="input-field mb-3 resize-none" rows={3} placeholder="Tell us why you'd be a great owner..." value={message} onChange={e => setMessage(e.target.value)} />
-                  <button onClick={handleApply} className="btn-primary w-full justify-center" disabled={applying}>
+                <form onSubmit={handleApply}>
+                  <textarea required className="input-field mb-3 resize-none" rows={3} placeholder="Tell us why you'd be a great owner..." value={message} onChange={e => setMessage(e.target.value)} />
+                  <button type="submit" className="btn-primary w-full justify-center" disabled={applying}>
                     {applying ? <Loader size={16} className="spinner" /> : <><Heart size={16} /> Apply Now</>}
                   </button>
-                </>
+                </form>
               )}
             </div>
           )}

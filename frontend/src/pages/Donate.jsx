@@ -62,8 +62,8 @@ const Donate = () => {
 
           <form onSubmit={handleDonate} className="flex flex-col gap-4">
             <div>
-              <label className="block text-slate-400 text-[13px] font-medium mb-1.5">Custom Amount (₹)</label>
-              <input type="number" min="1" className="input-field" placeholder="Enter amount" value={amount} onChange={e => setAmount(e.target.value)} />
+              <label className="block text-slate-400 text-[13px] font-medium mb-1.5">Custom Amount (₹) *</label>
+              <input type="number" min="1" required className="input-field" placeholder="Enter amount" value={amount} onChange={e => setAmount(e.target.value)} />
             </div>
             <div>
               <label className="block text-slate-400 text-[13px] font-medium mb-1.5">Message (optional)</label>

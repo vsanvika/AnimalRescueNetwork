@@ -16,6 +16,9 @@ import RescueDetail from './pages/RescueDetail';
 import AdoptionList from './pages/AdoptionList';
 import AdoptionDetail from './pages/AdoptionDetail';
 import AddAnimal from './pages/AddAnimal';
+import QRView from './pages/QRView';
+import QRScanner from './components/QRScanner';
+import GenerateQR from './pages/GenerateQR';
 import LostFound from './pages/LostFound';
 import Chat from './pages/Chat';
 import Volunteers from './pages/Volunteers';
@@ -47,6 +50,9 @@ function App() {
           <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <Register />} />
           <Route path="/adoption" element={<AdoptionList />} />
           <Route path="/adoption/:id" element={<AdoptionDetail />} />
+          <Route path="/qr/:token" element={<QRView />} />
+          <Route path="/scan" element={<QRScanner />} />
+          <Route path="/generate-qr" element={<Protected><GenerateQR /></Protected>} />
           <Route path="/lost-found" element={<LostFound />} />
 
           {/* Protected — any logged-in user */}

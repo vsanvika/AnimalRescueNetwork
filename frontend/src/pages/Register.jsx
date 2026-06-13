@@ -42,7 +42,7 @@ const Register = () => {
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label className="block text-slate-400 text-[13px] font-medium mb-1.5">Full Name</label>
+            <label className="block text-slate-400 text-[13px] font-medium mb-1.5">Full Name *</label>
             <div className="relative">
               <User size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
               <input type="text" required className="input-field pl-[42px]" placeholder="Your full name"
@@ -51,7 +51,7 @@ const Register = () => {
           </div>
 
           <div>
-            <label className="block text-slate-400 text-[13px] font-medium mb-1.5">Email</label>
+            <label className="block text-slate-400 text-[13px] font-medium mb-1.5">Email *</label>
             <div className="relative">
               <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
               <input type="email" required className="input-field pl-[42px]" placeholder="you@email.com"
@@ -68,7 +68,7 @@ const Register = () => {
           </div>
 
           <div>
-            <label className="block text-slate-400 text-[13px] font-medium mb-1.5">Password</label>
+            <label className="block text-slate-400 text-[13px] font-medium mb-1.5">Password *</label>
             <div className="relative">
               <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
               <input type={showPw ? 'text' : 'password'} required className="input-field px-[42px]" placeholder="Min 6 characters"

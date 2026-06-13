@@ -41,7 +41,7 @@ const Login = () => {
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label className="block text-slate-400 text-[13px] font-medium mb-1.5">Email</label>
+            <label className="block text-slate-400 text-[13px] font-medium mb-1.5">Email *</label>
             <div className="relative">
               <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
               <input
@@ -55,7 +55,7 @@ const Login = () => {
           </div>
 
           <div>
-            <label className="block text-slate-400 text-[13px] font-medium mb-1.5">Password</label>
+            <label className="block text-slate-400 text-[13px] font-medium mb-1.5">Password *</label>
             <div className="relative">
               <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
               <input

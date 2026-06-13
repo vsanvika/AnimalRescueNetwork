@@ -49,8 +49,13 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           {user ? (
             <>
-              {['rescue_team', 'admin'].includes(user.role) && (
-                <Link to="/adoption/add" className="btn-primary px-3.5 py-1.5 text-[13px]">Add Animal</Link>
+              {user && (
+                <>
+                  {['rescue_team', 'admin'].includes(user.role) && (
+                    <Link to="/adoption/add" className="btn-primary px-3.5 py-1.5 text-[13px]">Add Animal</Link>
+                  )}
+                  <Link to="/generate-qr" className="btn-secondary px-3.5 py-1.5 text-[13px]">Generate QR</Link>
+                </>
               )}
               <NotificationBell />
               {user.role === 'admin' && (
