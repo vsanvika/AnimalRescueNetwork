@@ -1,17 +1,14 @@
 import axios from 'axios';
 
+// VITE_API_URL should point to the server root (no trailing slash)
 const API = axios.create({
-  // VITE_API_URL should point to the server root (no /api)
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000',
+  // Append /api here so every request automatically goes to the correct namespace
+  baseURL: `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api`,
   withCredentials: true,
 });
 
-// Attach JWT token and ensure all requests are prefixed with /api
+// Attach JWT token to every request
 API.interceptors.request.use((config) => {
-  // Add /api prefix if not already present
-  if (!config.url.startsWith('/api')) {
-    config.url = `/api${config.url}`;
-  }
   const user = JSON.parse(localStorage.getItem('arn_user') || 'null');
   if (user?.token) {
     config.headers.Authorization = `Bearer ${user.token}`;
@@ -19,7 +16,7 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
-// Handle 401 globally
+// Global 401 handler
 API.interceptors.response.use(
   (response) => response,
   (error) => {

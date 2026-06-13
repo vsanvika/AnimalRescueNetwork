@@ -78,7 +78,7 @@ const GenerateQR = () => {
       formData.append('ownerContact[phone]', newAnimal.ownerPhone);
       if (imageFile) formData.append('image', imageFile);
 
-      const { data } = await API.post('/adoption/generate-qr', formData, {
+      const { data } = await API.post('/api/adoption/generate-qr', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
