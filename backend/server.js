@@ -76,7 +76,7 @@ apiRouter.get('/health', (req, res) => res.json({ status: 'OK', message: 'Animal
 
 // Mount routes with and without /api prefix to support frontend misconfigurations
 app.use('/api', apiRouter);
-app.use('/', apiRouter);
+
 
 // 404 handler
 app.use((req, res) => res.status(404).json({ message: 'Route not found' }));
