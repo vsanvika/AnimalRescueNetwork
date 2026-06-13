@@ -15,7 +15,7 @@ const useSocket = () => {
   useEffect(() => {
     if (!user || initialized.current) return;
 
-    socket = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000', {
+    socket = io(import.meta.env.VITE_SOCKET_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}`, {
       query: { userId: user._id },
       transports: ['websocket'],
     });
