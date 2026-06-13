@@ -1,9 +1,12 @@
 import axios from 'axios';
 
 // VITE_API_URL should point to the server root (no trailing slash)
+const rawApiUrl = import.meta.env.VITE_API_URL || window.location.origin || 'http://localhost:5000';
+const normalizedApiUrl = rawApiUrl.replace(/\/$/, '').replace(/\/api$/, '');
+const apiBaseUrl = `${normalizedApiUrl}/api`;
 const API = axios.create({
   // Append /api here so every request automatically goes to the correct namespace
-  baseURL: `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api`,
+  baseURL: apiBaseUrl,
   withCredentials: true,
 });
 
@@ -15,6 +18,25 @@ API.interceptors.request.use((config) => {
   }
   return config;
 });
+
+// Retry once without /api if the backend is mounted at the root path in production
+API.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const config = error.config;
+    if (!config || config._retry || error.response?.status !== 404) {
+      return Promise.reject(error);
+    }
+
+    config._retry = true;
+    const retryConfig = {
+      ...config,
+      baseURL: normalizedApiUrl,
+    };
+
+    return axios(retryConfig);
+  }
+);
 
 // Global 401 handler
 API.interceptors.response.use(
